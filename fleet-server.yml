@@ -9,15 +9,36 @@ fleet:
   agent:
     id: '${FLEET_SERVER_AGENT_ID:dev-fleet-server}'
 
+# fleet server integration policy
+
+# server.instrumentation:
+#   enabled: true
+#   hosts:
+#   - https://d722948037ee4ebd8d4294b91f2a8421.apm.us-east-1.aws.cloud.es.io:443
+#   secret_token: JpBCcOQxN81D5yucs2
+#   transaction_sample_rate: 1
+#   global_labels: obs_perf_build_num=XXX;obs_perf_test_suite=test_02
+#   environment: dev-juliabardi
+
 inputs:
   - type: fleet-server
     policy.id: '${FLEET_SERVER_POLICY_ID:fleet-server-policy}'
-#    server:
-#      ssl:
-#        enabled: true
-#        certificate: /creds/cert.pem
-#        key: /creds/key.pem
-#        key_passphrase: /creds/key.pem
+    server:
+      host: 0.0.0.0
+      port: 8220
+      instrumentation:
+        enabled: true
+        # hosts: ["https://d722948037ee4ebd8d4294b91f2a8421.apm.us-east-1.aws.cloud.es.io:443"]
+        # secret_token: JpBCcOQxN81D5yucs2
+        hosts: ["https://184993dcfa7f4a57bf3725cd956939f9.apm.us-central1.gcp.cloud.es.io:443"]
+        secret_token: L6azzQBxERPYa73Ojs
+        environment: development
+      ssl:
+        enabled: true
+        certificate: creds/fleet-server.crt
+        key: creds/fleet-server.key
+      runtime:
+        memory_limit: 4000000000 
 
 logging:
   to_stderr: true # Force the logging output to stderr

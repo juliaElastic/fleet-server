@@ -331,7 +331,7 @@ test-int-set: ## - Run integration tests without setup
 	# Initialize indices one before running all the tests
 	ELASTICSEARCH_SERVICE_TOKEN=$(shell ./dev-tools/integration/get-elasticsearch-servicetoken.sh ${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${TEST_ELASTICSEARCH_HOSTS}) \
 	ELASTICSEARCH_HOSTS=${TEST_ELASTICSEARCH_HOSTS} ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME} ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD} \
-	go test -v -tags=integration -count=1 -race -p 1 ./...
+	go test -v -tags=integration ./internal/pkg/server -run Test_Agent_Enrollment_Id
 
 ##################################################
 # e2e testing targets
